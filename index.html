@@ -3,36 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futuristic Video Player</title>
+    <title>Custom Video Player</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Content Security Policy Fix -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline';">
+
+    <!-- Load HLS.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script defer src="player.js"></script> <!-- Defer ensures this loads after everything -->
 </head>
 <body>
+
     <div id="video-container">
-        <video id="customPlayer" playsinline muted>
-            <source src="https://customer-pcv8v9br19tspxo3.cloudflarestream.com/48dfe82856166ea0935772228fbe428a/manifest/video.m3u8" type="application/x-mpegURL">
-        </video>
-
-        <!-- Play Button (Animated) -->
-        <div id="play-overlay" class="show">
-            <div class="play-icon">▶</div>
-        </div>
-
-        <!-- Circular Progress Indicator -->
-        <div id="progress-circle"></div>
-
-        <!-- Controls -->
-        <div id="controls">
-            <button id="playPauseBtn">▶</button>
-            <input type="range" id="seekBar" min="0" max="100" value="0">
-            <div id="volume-container">
-                <button id="muteBtn">🔊</button>
-                <div id="volume-wave"></div>
-            </div>
-            <button id="fullscreenBtn">⛶</button>
-        </div>
+        <video id="customPlayer" controls></video> <!-- Video Player -->
     </div>
 
-    <script src="player.js"></script>
+    <!-- Video Controls -->
+    <div id="controls">
+        <button id="playPauseBtn">Play</button>
+        <button id="muteBtn">Mute</button>
+        <button id="fullscreenBtn">Fullscreen</button>
+        <input type="range" id="seekBar" min="0" max="100" step="1">
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1">
+    </div>
+
 </body>
 </html>
