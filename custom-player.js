@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("✅ player.js loaded!");
+    console.log("✅ customn-player.js loaded!");
 
     var video = document.getElementById("customPlayer");
 
@@ -41,6 +41,28 @@ document.addEventListener("DOMContentLoaded", function () {
             video.webkitRequestFullscreen();
         } else if (video.msRequestFullscreen) {
             video.msRequestFullscreen();
+        }
+    });
+
+    // Tracking at 25%, 50%, 75%, and 100% Video Watch Progress
+    video.addEventListener("timeupdate", function () {
+        var progress = (video.currentTime / video.duration) * 100;
+
+        if (progress >= 25 && !video.dataset.tracked25) {
+            console.log("📊 Video 25% watched");
+            video.dataset.tracked25 = true;
+        }
+        if (progress >= 50 && !video.dataset.tracked50) {
+            console.log("📊 Video 50% watched");
+            video.dataset.tracked50 = true;
+        }
+        if (progress >= 75 && !video.dataset.tracked75) {
+            console.log("📊 Video 75% watched");
+            video.dataset.tracked75 = true;
+        }
+        if (progress >= 100 && !video.dataset.tracked100) {
+            console.log("🎉 Video fully watched!");
+            video.dataset.tracked100 = true;
         }
     });
 });
