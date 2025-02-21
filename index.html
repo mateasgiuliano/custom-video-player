@@ -3,25 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Video Player</title>
+    <title>Futuristic Video Player</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> <!-- HLS.js for Cloudflare Stream -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
-
     <div id="video-container">
-        <video id="customPlayer" controls></video> <!-- Video Player -->
+        <video id="customPlayer" playsinline muted>
+            <source src="https://customer-pcv8v9br19tspxo3.cloudflarestream.com/48dfe82856166ea0935772228fbe428a/manifest/video.m3u8" type="application/x-mpegURL">
+        </video>
+
+        <!-- Play Button (Animated) -->
+        <div id="play-overlay" class="show">
+            <div class="play-icon">▶</div>
+        </div>
+
+        <!-- Circular Progress Indicator -->
+        <div id="progress-circle"></div>
+
+        <!-- Controls -->
+        <div id="controls">
+            <button id="playPauseBtn">▶</button>
+            <input type="range" id="seekBar" min="0" max="100" value="0">
+            <div id="volume-container">
+                <button id="muteBtn">🔊</button>
+                <div id="volume-wave"></div>
+            </div>
+            <button id="fullscreenBtn">⛶</button>
+        </div>
     </div>
 
-    <!-- Video Controls -->
-    <div id="controls">
-        <button id="playPauseBtn">Play</button>
-        <button id="muteBtn">Mute</button>
-        <button id="fullscreenBtn">Fullscreen</button>
-        <input type="range" id="seekBar" min="0" max="100" step="1">
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.1">
-    </div>
-
-    <script src="player.js"></script> <!-- Custom Video Player JavaScript -->
+    <script src="player.js"></script>
 </body>
 </html>
