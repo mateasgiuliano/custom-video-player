@@ -6,12 +6,12 @@
     <title>Custom Video Player</title>
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Content Security Policy Fix -->
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline';">
+    <!-- Content Security Policy (Fixes eval blocking) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval';">
 
     <!-- Load HLS.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script defer src="player.js"></script> <!-- Defer ensures this loads after everything -->
+    <script defer src="player.js"></script> <!-- Ensures it loads AFTER HTML -->
 </head>
 <body>
 
