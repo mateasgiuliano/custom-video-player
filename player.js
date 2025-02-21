@@ -1,26 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("✅ customn-player.js loaded!");
+    console.log("✅ player.js loaded!");
 
     var video = document.getElementById("customPlayer");
 
     if (!video) {
-        console.error("❌ ERROR: Video element 'customPlayer' not found.");
+        console.error("🚨 ERROR: Video element 'customPlayer' not found.");
         return;
     }
 
+    // Cloudflare Stream Video URL
+    var videoURL = "https://customer-pcv8v9br19tspxo3.cloudflarestream.com/48dfe82856166ea0935772228fbe428a/manifest/video.m3u8";
+
+    // Load HLS video for browsers that support it
     if (Hls.isSupported()) {
         var hls = new Hls();
-        hls.loadSource("https://customer-pcv8v9br19tspxo3.cloudflarestream.com/48dfe82856166ea0935772228fbe428a/manifest/video.m3u8");
+        hls.loadSource(videoURL);
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED, function () {
             console.log("✅ Video source loaded!");
-            video.play();
         });
     } else {
-        video.src = "https://customer-pcv8v9br19tspxo3.cloudflarestream.com/48dfe82856166ea0935772228fbe428a/manifest/video.m3u8";
+        video.src = videoURL;
     }
 
-    // Play/Pause Button
+    // Play/Pause button
     document.getElementById("playPauseBtn").addEventListener("click", function () {
         if (video.paused) {
             video.play();
@@ -31,7 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Fullscreen Button
+    // Mute button
+    document.getElementById("muteBtn").addEventListener("click", function () {
+        video.muted = !video.muted;
+        this.innerText = video.muted ? "Unmute" : "Mute";
+    });
+
+    // Fullscreen button
     document.getElementById("fullscreenBtn").addEventListener("click", function () {
         if (video.requestFullscreen) {
             video.requestFullscreen();
@@ -44,25 +53,45 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Tracking at 25%, 50%, 75%, and 100% Video Watch Progress
+    // Volume Control
+    document.getElementById("volumeSlider").addEventListener("input", function () {
+        video.volume = this.value;
+    });
+
+    // Seekbar
+    document.getElementById("seekBar").addEventListener("input", function () {
+        var seekTo = video.duration * (this.value / 100);
+        video.currentTime = seekTo;
+    });
+
+    // Update seekbar
     video.addEventListener("timeupdate", function () {
         var progress = (video.currentTime / video.duration) * 100;
+        document.getElementById("seekBar").value = progress;
+    });
 
-        if (progress >= 25 && !video.dataset.tracked25) {
-            console.log("📊 Video 25% watched");
-            video.dataset.tracked25 = true;
+    // 📊 Tracking Video Progress (25%, 50%, 75%, 100%)
+    var progressTracked = { "25": false, "50": false, "75": false, "100": false };
+
+    video.addEventListener("timeupdate", function () {
+        var percentWatched = (video.currentTime / video.duration) * 100;
+
+        if (percentWatched >= 25 && !progressTracked["25"]) {
+            console.log("📊 25% watched!");
+            progressTracked["25"] = true;
         }
-        if (progress >= 50 && !video.dataset.tracked50) {
-            console.log("📊 Video 50% watched");
-            video.dataset.tracked50 = true;
+        if (percentWatched >= 50 && !progressTracked["50"]) {
+            console.log("📊 50% watched!");
+            progressTracked["50"] = true;
         }
-        if (progress >= 75 && !video.dataset.tracked75) {
-            console.log("📊 Video 75% watched");
-            video.dataset.tracked75 = true;
+        if (percentWatched >= 75 && !progressTracked["75"]) {
+            console.log("📊 75% watched!");
+            progressTracked["75"] = true;
         }
-        if (progress >= 100 && !video.dataset.tracked100) {
-            console.log("🎉 Video fully watched!");
-            video.dataset.tracked100 = true;
+        if (percentWatched >= 100 && !progressTracked["100"]) {
+            console.log("📊 100% (Complete) watched!");
+            progressTracked["100"] = true;
         }
     });
+
 });
