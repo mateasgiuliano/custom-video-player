@@ -1,23 +1,19 @@
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("🚀 player.js loaded!");
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("🚀 Minimal Player JS loaded!");
 
   const video = document.getElementById("customPlayer");
-  const playPauseBtn = document.getElementById("playPauseBtn");
-  const muteBtn = document.getElementById("muteBtn");
-  const fullscreenBtn = document.getElementById("fullscreenBtn");
-  const seekBar = document.getElementById("seekBar");
+  const volumeIcon = document.getElementById("volumeIcon");
   const volumeSlider = document.getElementById("volumeSlider");
+  const seekBar = document.getElementById("seekBar");
+  const settingsIcon = document.getElementById("settingsIcon");
+  const settingsMenu = document.getElementById("settingsMenu");
+  const fullscreenIcon = document.getElementById("fullscreenIcon");
 
-  if (!video) {
-    console.error("❌ Video element not found.");
-    return;
-  }
-
-  // Replace with your actual Cloudflare Stream Video ID
-  const videoId = "48dfe82856166ea0935772228fbe428a";
+  // Replace with your Cloudflare Stream Video ID
+  const videoId = "48dfe82856166ea0935772228fbe428a"; 
   const videoUrl = `https://customer-pcv8v9br19tspxo3.cloudflarestream.com/${videoId}/manifest/video.m3u8`;
 
-  // Load Cloudflare Stream Video via HLS
+  // HLS.js
   if (Hls.isSupported()) {
     const hls = new Hls({ debug: false });
     hls.loadSource(videoUrl);
@@ -29,25 +25,48 @@ document.addEventListener("DOMContentLoaded", function () {
     video.src = videoUrl;
   }
 
-  // ▶️ Play/Pause
-  playPauseBtn.addEventListener("click", () => {
-    if (video.paused) {
-      video.play();
-      playPauseBtn.innerText = "⏸";
+  // Click on video -> Play/Pause
+  video.addEventListener("click", () => {
+    if (video.paused) video.play();
+    else video.pause();
+  });
+
+  // Volume Icon -> (Hover to show slider if needed, or keep always)
+  // Already handled in CSS if you want the slider to expand on .left-controls:hover
+  volumeSlider.addEventListener("input", () => {
+    video.volume = volumeSlider.value;
+  });
+
+  // Seek Bar
+  video.addEventListener("timeupdate", () => {
+    if (!video.duration) return;
+    const progress = (video.currentTime / video.duration) * 100;
+    seekBar.value = progress;
+  });
+  seekBar.addEventListener("input", () => {
+    const time = (seekBar.value / 100) * video.duration;
+    video.currentTime = time;
+  });
+
+  // Settings Icon -> Toggle settings menu
+  settingsIcon.addEventListener("click", () => {
+    if (settingsMenu.style.display === "flex") {
+      settingsMenu.style.display = "none";
     } else {
-      video.pause();
-      playPauseBtn.innerText = "▶";
+      settingsMenu.style.display = "flex";
     }
   });
 
-  // 🔇 Mute/Unmute
-  muteBtn.addEventListener("click", () => {
-    video.muted = !video.muted;
-    muteBtn.innerText = video.muted ? "🔇" : "🔊";
-  });
+  // Settings Menu -> Playback Speed
+  const playbackSelect = document.getElementById("playbackSelect");
+  if (playbackSelect) {
+    playbackSelect.addEventListener("change", () => {
+      video.playbackRate = parseFloat(playbackSelect.value);
+    });
+  }
 
-  // ⛶ Fullscreen
-  fullscreenBtn.addEventListener("click", () => {
+  // Fullscreen Icon
+  fullscreenIcon.addEventListener("click", () => {
     if (!document.fullscreenElement) {
       video.requestFullscreen();
     } else {
@@ -55,28 +74,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // 🎥 Seek Bar
-  video.addEventListener("timeupdate", () => {
-    if (video.duration) {
-      const progress = (video.currentTime / video.duration) * 100;
-      seekBar.value = progress;
-    }
-  });
-
-  seekBar.addEventListener("input", () => {
-    const time = (seekBar.value / 100) * video.duration;
-    video.currentTime = time;
-  });
-
-  // 🔉 Volume Slider
-  volumeSlider.addEventListener("input", () => {
-    video.volume = volumeSlider.value;
-  });
-
-  // 📊 Tracking 25%, 50%, 75%, 95%, 100%
+  // Tracking at 25%, 50%, 75%, 95%, 100%
   const trackPoints = [25, 50, 75, 95, 100];
   const tracked = {};
-
   video.addEventListener("timeupdate", () => {
     if (!video.duration) return;
     const percent = (video.currentTime / video.duration) * 100;
