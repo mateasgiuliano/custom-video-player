@@ -1,20 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🚀 Minimal Player with Volume Icon Thumb loaded!");
+  console.log("🚀 Minimal Player JS loaded!");
 
   const video = document.getElementById("customPlayer");
   const volumeSlider = document.getElementById("volumeSlider");
-  const seekBar = document.getElementById("seekBar");
+  const seekBar = document.querySelector(".progress-bar");
   const settingsIcon = document.getElementById("settingsIcon");
   const settingsMenu = document.getElementById("settingsMenu");
   const fullscreenIcon = document.getElementById("fullscreenIcon");
 
-  // Replace with your Cloudflare Stream Video ID
+  // Load Cloudflare Stream Video
   const videoId = "48dfe82856166ea0935772228fbe428a"; 
   const videoUrl = `https://customer-pcv8v9br19tspxo3.cloudflarestream.com/${videoId}/manifest/video.m3u8`;
 
-  // HLS.js
   if (Hls.isSupported()) {
-    const hls = new Hls({ debug: false });
+    const hls = new Hls();
     hls.loadSource(videoUrl);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED, () => {
@@ -24,46 +23,40 @@ document.addEventListener("DOMContentLoaded", () => {
     video.src = videoUrl;
   }
 
-  // Click video -> Play/Pause
+  // Click to Play/Pause
   video.addEventListener("click", () => {
     if (video.paused) video.play();
     else video.pause();
   });
 
-  // Volume slider logic
+  // Volume Control
   volumeSlider.addEventListener("input", () => {
     video.volume = volumeSlider.value;
   });
 
-  // Seek bar logic
+  // Seek Bar Logic
   video.addEventListener("timeupdate", () => {
-    if (!video.duration) return;
     const progress = (video.currentTime / video.duration) * 100;
-    seekBar.value = progress;
-  });
-  seekBar.addEventListener("input", () => {
-    const time = (seekBar.value / 100) * video.duration;
-    video.currentTime = time;
+    document.querySelector(".progress-bar-fill").style.width = `${progress}%`;
+    document.querySelector(".progress-bar-handle").style.left = `${progress}%`;
   });
 
-  // Settings icon -> toggle settings menu
+  seekBar.addEventListener("click", (e) => {
+    const newTime = (e.offsetX / seekBar.clientWidth) * video.duration;
+    video.currentTime = newTime;
+  });
+
+  // Settings Toggle
   settingsIcon.addEventListener("click", () => {
-    if (settingsMenu.style.display === "flex") {
-      settingsMenu.style.display = "none";
-    } else {
-      settingsMenu.style.display = "flex";
-    }
+    settingsMenu.style.display = settingsMenu.style.display === "flex" ? "none" : "flex";
   });
 
-  // Playback speed
-  const playbackSelect = document.getElementById("playbackSelect");
-  if (playbackSelect) {
-    playbackSelect.addEventListener("change", () => {
-      video.playbackRate = parseFloat(playbackSelect.value);
-    });
-  }
+  // Playback Speed
+  document.getElementById("playbackSelect").addEventListener("change", (e) => {
+    video.playbackRate = parseFloat(e.target.value);
+  });
 
-  // Fullscreen
+  // Fullscreen Toggle
   fullscreenIcon.addEventListener("click", () => {
     if (!document.fullscreenElement) {
       video.requestFullscreen();
@@ -76,12 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const trackPoints = [25, 50, 75, 95, 100];
   const tracked = {};
   video.addEventListener("timeupdate", () => {
-    if (!video.duration) return;
     const percent = (video.currentTime / video.duration) * 100;
-
     trackPoints.forEach(point => {
       if (percent >= point && !tracked[point]) {
-        console.log(`✅ User watched ${point}% of the video.`);
+        console.log(`✅ Watched ${point}%`);
         tracked[point] = true;
       }
     });
