@@ -1,113 +1,121 @@
-/* Minimal, clean overlay UI inspired by Wistia & Eboov */
+/* Incredible Futuristic Video Player UI */
 
-/* Basic Reset */
+/* Global Reset & Body Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
-
 body {
-  background-color: #000;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Container for the video & overlay controls */
+/* Video Container */
 .video-container {
   position: relative;
-  width: 90%;
-  max-width: 800px;
-  border-radius: 10px;
+  width: 80%;
+  max-width: 900px;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  background-color: #000;
+  box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
 }
 
-/* The video itself */
-.video-frame {
+/* Video Element */
+video {
   width: 100%;
   display: block;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
-/* Overlay Controls (Play, Mute, Fullscreen) */
+/* Controls Overlay (Floating on Video) */
 .controls-overlay {
   position: absolute;
-  bottom: 15px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 8px 12px;
-  border-radius: 8px;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 50px;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
 }
-
-/* Show controls on hover */
 .video-container:hover .controls-overlay {
   opacity: 1;
 }
 
-/* Buttons */
+/* Control Buttons (Minimal, Glowing Icons) */
 .control-btn {
-  background: transparent;
+  background: linear-gradient(145deg, #00ffff, #0055ff);
   border: none;
+  border-radius: 50%;
+  padding: 12px;
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  transition: 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 255, 255, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 .control-btn:hover {
-  transform: scale(1.15);
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 255, 255, 0.7);
 }
 
-/* Seek Bar (bottom) */
-.seek-bar {
+/* Sliders Container (For Seek & Volume) */
+.sliders-container {
   position: absolute;
   bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  height: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Seek Bar */
+.seek-bar {
+  width: 100%;
+  appearance: none;
   background: rgba(255, 255, 255, 0.3);
+  height: 4px;
   border-radius: 2px;
   cursor: pointer;
   outline: none;
 }
-
 .seek-bar::-webkit-slider-thumb {
   appearance: none;
-  width: 12px;
-  height: 12px;
-  background: cyan;
+  width: 14px;
+  height: 14px;
+  background: #00ffff;
   border-radius: 50%;
   cursor: pointer;
+  border: 2px solid #fff;
 }
 
-/* Volume Bar (right side) */
+/* Volume Bar (Separate & Minimal) */
 .volume-bar {
-  position: absolute;
-  bottom: 45px;
-  right: 15px;
-  width: 80px;
-  height: 4px;
+  width: 100px;
+  appearance: none;
   background: rgba(255, 255, 255, 0.3);
+  height: 4px;
   border-radius: 2px;
   cursor: pointer;
   outline: none;
 }
-
 .volume-bar::-webkit-slider-thumb {
   appearance: none;
   width: 10px;
   height: 10px;
-  background: cyan;
+  background: #00ffff;
   border-radius: 50%;
   cursor: pointer;
+  border: 2px solid #fff;
 }
