@@ -1,10 +1,4 @@
-/* 
-  Refined, Minimal Overlay Video Player 
-  - Progress bar dot perfectly centered 
-  - Actual gear & fullscreen icons 
-  - Volume icon as thumb 
-  - No shaking 
-*/
+/* Final fix: Perfectly centered slider thumbs (seek & volume) */
 
 /* Basic Reset */
 * {
@@ -22,7 +16,7 @@ body {
   height: 100vh;
 }
 
-/* Container for video & bottom overlay */
+/* Video Container */
 .video-container {
   position: relative;
   width: 80%;
@@ -51,8 +45,6 @@ body {
   opacity: 0;
   transition: opacity 0.3s;
 }
-
-/* Show controls on hover */
 .video-container:hover .controls-bar {
   opacity: 1;
 }
@@ -73,7 +65,7 @@ body {
   gap: 10px;
 }
 
-/* Icon style: ~58% opacity, 24x24, transitions on hover */
+/* Icons: White ~58% opacity, 24x24 */
 .icon-volume,
 .icon-settings,
 .icon-fullscreen {
@@ -84,57 +76,53 @@ body {
   transition: opacity 0.2s;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: 70%;
 }
-
-/* Hover effect: full opacity */
 .icon-volume:hover,
 .icon-settings:hover,
 .icon-fullscreen:hover {
   opacity: 1;
 }
 
-/* Actual gear icon (SVG) for settings */
-.icon-settings {
-  background-image: url("data:image/svg+xml,%3Csvg fill='white' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.14 12.936c.03-.304.06-.616.06-.936s-.03-.632-.06-.936l2.11-1.65c.18-.144.23-.396.11-.62l-2-3.464c-.12-.216-.37-.3-.59-.216l-2.49 1a8.994 8.994 0 00-1.62-.936l-.38-2.65a.502.502 0 00-.5-.424h-4c-.26 0-.48.188-.5.424l-.38 2.65c-.58.24-1.12.552-1.62.936l-2.49-1c-.22-.084-.47 0-.59.216l-2 3.464c-.12.224-.07.476.11.62l2.11 1.65c-.03.304-.06.616-.06.936s.03.632.06.936l-2.11 1.65c-.18.144-.23.396-.11.62l2 3.464c.12.216.37.3.59.216l2.49-1c.5.384 1.04.696 1.62.936l.38 2.65c.02.236.24.424.5.424h4c.26 0 .48-.188.5-.424l.38-2.65c.58-.24 1.12-.552 1.62-.936l2.49 1c.22.084.47 0 .59-.216l2-3.464c.12-.224.07-.476-.11-.62l-2.11-1.65zm-7.14 2.564a3 3 0 110-6 3 3 0 010 6z'/%3E%3C/svg%3E");
-}
-
-/* Actual fullscreen icon (SVG) */
-.icon-fullscreen {
-  background-image: url("data:image/svg+xml,%3Csvg fill='white' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 9h-3v2h5v-5h-2v3zm-3-9h3V5h-5v2h2v3z'/%3E%3C/svg%3E");
-}
-
-/* Actual volume icon for the volume container (left) */
+/* Example icons: replace with your own SVG if needed */
 .icon-volume {
-  background-image: url("data:image/svg+xml,%3Csvg fill='white' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 10v4h4l5 5V5l-5 5H3z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 10v4h4l5 5V5l-5 5H3z'/%3E%3C/svg%3E");
+}
+.icon-settings {
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M19.14 12.936c.03-.304.06-.616.06-.936s-.03-.632-.06-.936l2.11-1.65c.18-.144.23-.396.11-.62l-2-3.464c-.12-.216-.37-.3-.59-.216l-2.49 1a8.994 8.994 0 00-1.62-.936l-.38-2.65a.502.502 0 00-.5-.424h-4c-.26 0-.48.188-.5.424l-.38 2.65c-.58.24-1.12.552-1.62.936l-2.49-1c-.22-.084-.47 0-.59.216l-2 3.464c-.12.224-.07.476.11.62l2.11 1.65c-.03.304-.06.616-.06.936s.03.632.06.936l-2.11 1.65c-.18.144-.23.396-.11.62l2 3.464c.12.216.37.3.59.216l2.49-1c.5.384 1.04.696 1.62.936l.38 2.65c.02.236.24.424.5.424h4c.26 0 .48-.188.5-.424l.38-2.65c.58-.24 1.12-.552 1.62-.936l2.49 1c.22.084.47 0 .59-.216l2-3.464c.12-.224.07-.476-.11-.62l-2.11-1.65zm-7.14 2.564a3 3 0 110-6 3 3 0 010 6z'/%3E%3C/svg%3E");
+}
+.icon-fullscreen {
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 9h-3v2h5v-5h-2v3zm-3-9h3V5h-5v2h2v3z'/%3E%3C/svg%3E");
 }
 
-/* Volume Slider (hidden by default, expand on .left-controls hover) */
+/* Volume Slider approach: 12px total, track is 4px in center */
 .volume-slider {
   position: absolute;
   left: 32px;
   bottom: 50%;
   transform: translateY(50%);
-  width: 0;
-  height: 4px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 2px;
+  width: 0;           /* hidden by default */
+  height: 12px;       /* match thumb size for perfect center */
+  background: none;   /* track is the runnable track below */
   cursor: pointer;
   outline: none;
   transition: width 0.2s;
 }
 
-/* Expand on hover */
+/* Expand on hover of .left-controls */
 .left-controls:hover .volume-slider {
   width: 80px;
 }
 
-/* Use volume icon for the slider thumb so it doesn't shake */
+/* Volume slider track: 4px, centered in 12px container */
 .volume-slider::-webkit-slider-runnable-track {
+  margin-top: 4px; /* centers a 4px track in a 12px container */
   height: 4px;
   background: rgba(255,255,255,0.3);
   border-radius: 2px;
 }
+
+/* Volume slider thumb: 24x24 volume icon */
 .volume-slider::-webkit-slider-thumb {
   appearance: none;
   width: 24px;
@@ -143,27 +131,26 @@ body {
   background-size: 70%;
   border: none;
   cursor: pointer;
-  margin-top: -10px; /* center the icon vertically so no shake */
-  transition: none;
 }
 
-/* Seek Bar (60% width, center) */
+/* Seek Bar: also 12px total, 4px track in center */
 .seek-bar {
   width: 60%;
-  height: 4px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 2px;
+  height: 12px;       /* match thumb size */
+  background: none;   /* track is the runnable track */
   cursor: pointer;
   outline: none;
 }
 
+/* Seek bar track: 4px, centered in 12px container */
 .seek-bar::-webkit-slider-runnable-track {
+  margin-top: 4px; /* centers 4px track in 12px container */
   height: 4px;
   background: rgba(255,255,255,0.3);
   border-radius: 2px;
 }
 
-/* Perfectly center the dot with margin-top */
+/* Seek bar thumb: 12x12 dot, no offset needed */
 .seek-bar::-webkit-slider-thumb {
   appearance: none;
   width: 12px;
@@ -171,7 +158,6 @@ body {
   background: #fff;
   border-radius: 50%;
   cursor: pointer;
-  margin-top: -4px; /* ensures dot is vertically centered if track is 4px */
 }
 
 /* Settings Menu (hidden by default) */
