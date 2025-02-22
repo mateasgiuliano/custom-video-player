@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🚀 Minimal Player JS loaded!");
+  console.log("🚀 Minimal Player with Volume Icon Thumb loaded!");
 
   const video = document.getElementById("customPlayer");
-  const volumeIcon = document.getElementById("volumeIcon");
   const volumeSlider = document.getElementById("volumeSlider");
   const seekBar = document.getElementById("seekBar");
   const settingsIcon = document.getElementById("settingsIcon");
@@ -25,19 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
     video.src = videoUrl;
   }
 
-  // Click on video -> Play/Pause
+  // Click video -> Play/Pause
   video.addEventListener("click", () => {
     if (video.paused) video.play();
     else video.pause();
   });
 
-  // Volume Icon -> (Hover to show slider if needed, or keep always)
-  // Already handled in CSS if you want the slider to expand on .left-controls:hover
+  // Volume slider logic
   volumeSlider.addEventListener("input", () => {
     video.volume = volumeSlider.value;
   });
 
-  // Seek Bar
+  // Seek bar logic
   video.addEventListener("timeupdate", () => {
     if (!video.duration) return;
     const progress = (video.currentTime / video.duration) * 100;
@@ -48,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     video.currentTime = time;
   });
 
-  // Settings Icon -> Toggle settings menu
+  // Settings icon -> toggle settings menu
   settingsIcon.addEventListener("click", () => {
     if (settingsMenu.style.display === "flex") {
       settingsMenu.style.display = "none";
@@ -57,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Settings Menu -> Playback Speed
+  // Playback speed
   const playbackSelect = document.getElementById("playbackSelect");
   if (playbackSelect) {
     playbackSelect.addEventListener("change", () => {
@@ -65,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Fullscreen Icon
+  // Fullscreen
   fullscreenIcon.addEventListener("click", () => {
     if (!document.fullscreenElement) {
       video.requestFullscreen();
