@@ -5,41 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Video Player</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> <!-- HLS FIX -->
 </head>
 <body>
 
-<div class="video-container">
-    <video id="customPlayer" playsinline></video>
+    <div class="video-container">
+        <video id="customPlayer" playsinline></video>
 
-    <!-- Controls -->
-    <div class="controls">
-        <!-- Volume -->
-        <div class="volume-container">
-            <img id="volumeIcon" src="volume-icon.svg" class="control-icon">
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
+        <!-- Controls Overlay -->
+        <div class="video-controls">
+            
+            <!-- Volume Control -->
+            <div class="volume-container">
+                <img id="volumeIcon" src="icons/volume-icon.svg" alt="Volume">
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
+            </div>
+
+            <!-- Seek Bar -->
+            <input type="range" id="seekBar" min="0" max="100" step="0.1">
+
+            <!-- Settings -->
+            <img id="settingsIcon" src="icons/settings-icon.svg" alt="Settings">
+
+            <!-- Fullscreen -->
+            <img id="fullscreenIcon" src="icons/fullscreen-icon.svg" alt="Fullscreen">
         </div>
 
-        <!-- Seek Bar -->
-        <input type="range" id="seekBar" min="0" max="100" step="0.1">
-
-        <!-- Settings -->
-        <img id="settingsIcon" src="settings-icon.svg" class="control-icon">
+        <!-- Settings Dropdown (Hidden by Default) -->
         <div id="settingsMenu" class="settings-menu">
-            <label>Playback Speed:</label>
+            <label for="playbackSelect">Playback Speed</label>
             <select id="playbackSelect">
                 <option value="0.5">0.5x</option>
-                <option value="1" selected>1x</option>
+                <option value="1" selected>1x (Normal)</option>
                 <option value="1.5">1.5x</option>
                 <option value="2">2x</option>
             </select>
+            
+            <label for="qualitySelect">Quality</label>
+            <select id="qualitySelect">
+                <option value="auto" selected>Auto</option>
+                <option value="1080p">1080p</option>
+                <option value="720p">720p</option>
+                <option value="480p">480p</option>
+            </select>
         </div>
-
-        <!-- Fullscreen -->
-        <img id="fullscreenIcon" src="fullscreen-icon.svg" class="control-icon">
     </div>
-</div>
 
-<script src="player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="player.js"></script>
 </body>
 </html>
