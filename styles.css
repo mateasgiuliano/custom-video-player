@@ -1,85 +1,111 @@
-body {
-    background-color: #000;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+:root {
+    --video-bg: rgba(0, 0, 0, 0.8);
+    --control-bg: rgba(255, 255, 255, 0.2);
+    --control-hover-bg: rgba(255, 255, 255, 0.4);
+    --progress-bar: #3498db;
+    --progress-bg: rgba(255, 255, 255, 0.3);
+    --icon-color: rgba(255, 255, 255, 0.8);
+    --icon-hover-color: rgba(255, 255, 255, 1);
 }
 
+/* Video Container */
 .video-container {
     position: relative;
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    background: var(--video-bg);
 }
 
+/* Video */
 video {
     width: 100%;
     display: block;
-    cursor: pointer;
 }
 
-.controls {
+/* Controls */
+.video-controls {
     position: absolute;
     bottom: 10px;
-    left: 10px;
-    right: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
     display: flex;
     align-items: center;
-    gap: 10px;
-    opacity: 0.9;
-}
-
-.control-icon {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.3s;
-}
-
-.control-icon:hover {
-    opacity: 1;
-}
-
-.volume-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-#volumeSlider {
-    width: 80px;
+    justify-content: space-between;
+    background: var(--control-bg);
+    padding: 10px;
+    border-radius: 10px;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-.volume-container:hover #volumeSlider {
+.video-container:hover .video-controls {
     opacity: 1;
 }
 
+/* Volume & Seek Bar */
+.volume-container {
+    display: flex;
+    align-items: center;
+}
+#volumeIcon {
+    width: 24px;
+    cursor: pointer;
+    filter: brightness(1);
+    transition: filter 0.3s;
+}
+#volumeIcon:hover {
+    filter: brightness(1.5);
+}
+#volumeSlider {
+    width: 80px;
+    height: 4px;
+    background: var(--progress-bg);
+    cursor: pointer;
+}
+
+/* Seek Bar */
 #seekBar {
-    width: 60%;
-    height: 5px;
-    border-radius: 5px;
-    background: #fff;
-    outline: none;
-    transition: height 0.3s;
+    flex: 1;
+    height: 4px;
+    background: var(--progress-bg);
+    cursor: pointer;
 }
 
-#seekBar:hover {
-    height: 8px;
+/* Icons */
+#settingsIcon, #fullscreenIcon {
+    width: 24px;
+    cursor: pointer;
+    filter: brightness(1);
+    transition: filter 0.3s;
+}
+#settingsIcon:hover, #fullscreenIcon:hover {
+    filter: brightness(1.5);
 }
 
+/* Settings Menu */
 .settings-menu {
-    display: none;
     position: absolute;
-    bottom: 40px;
-    background: rgba(0, 0, 0, 0.8);
+    bottom: 50px;
+    right: 10px;
+    background: var(--video-bg);
     padding: 10px;
+    display: none;
+    flex-direction: column;
+    border-radius: 5px;
+}
+.settings-menu label {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.settings-menu select {
+    background: var(--control-bg);
+    color: white;
+    border: none;
+    padding: 5px;
     border-radius: 5px;
 }
