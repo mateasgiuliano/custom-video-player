@@ -1,57 +1,31 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Times; color: #09007a; -webkit-text-stroke: #09007a}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px Times; color: #09007a; -webkit-text-stroke: #09007a; min-height: 16.0px}
-    span.s1 {font-kerning: none}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Video Player</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> <!-- HLS.js for Cloudflare Stream -->
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;Futuristic Video Player&lt;/title&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- ✅ FINAL FIX: Secure Content Security Policy --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta http-equiv="Content-Security-Policy" content="</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>default-src 'self';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>script-src 'self' https://cdn.jsdelivr.net;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>font-src 'self' https://fonts.gstatic.com;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>media-src *;"&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- ✅ Load HLS.js --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/hls.js@latest"&gt;&lt;/script&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- ✅ Futuristic Font --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- ✅ Custom CSS --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="styles.css"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="video-container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;video id="customPlayer"&gt;&lt;/video&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="controls"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button id="playPauseBtn"&gt;▶&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button id="muteBtn"&gt;🔇&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button id="fullscreenBtn"&gt;⛶&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;input type="range" id="seekBar" min="0" max="100" step="1"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;input type="range" id="volumeSlider" min="0" max="1" step="0.1"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- ✅ Load Custom Player Script --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script defer src="player.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+
+<div class="video-container">
+    <video id="customPlayer" class="video-frame"></video>
+    
+    <!-- Controls Overlay -->
+    <div class="controls-overlay">
+        <button id="playPauseBtn" class="control-btn play-pause"></button>
+        <button id="muteBtn" class="control-btn mute"></button>
+        <button id="fullscreenBtn" class="control-btn fullscreen"></button>
+    </div>
+
+    <!-- Seek & Volume Sliders -->
+    <div class="sliders-container">
+        <input type="range" id="seekBar" class="seek-bar" min="0" max="100" step="1">
+        <input type="range" id="volumeSlider" class="volume-bar" min="0" max="1" step="0.1">
+    </div>
+</div>
+
+<script src="player.js"></script> <!-- Custom Video Player JavaScript -->
 </body>
 </html>
