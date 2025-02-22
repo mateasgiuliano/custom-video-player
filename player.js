@@ -1,75 +1,87 @@
-/* General Styling */
-body {
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("🚀 player.js loaded!");
 
-.video-container {
-    position: relative;
-    width: 90%;
-    max-width: 800px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-}
+    const video = document.getElementById("customPlayer");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const muteBtn = document.getElementById("muteBtn");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
+    const seekBar = document.getElementById("seekBar");
+    const volumeSlider = document.getElementById("volumeSlider");
 
-/* Video Frame */
-.video-frame {
-    width: 100%;
-    display: block;
-    border-radius: 10px;
-}
+    if (!video) {
+        console.error("❌ ERROR: Video element not found.");
+        return;
+    }
 
-/* Controls Overlay */
-.controls-overlay {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 15px;
-}
+    // Load Cloudflare Stream Video
+    if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource("https://customer-pcv8v9br19tspxo3.cloudflarestream.com/your-video-id/manifest/video.m3u8");
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            console.log("✅ Video source loaded!");
+        });
+    } else {
+        video.src = "https://customer-pcv8v9br19tspxo3.cloudflarestream.com/your-video-id/manifest/video.m3u8";
+    }
 
-.control-btn {
-    background: rgba(0, 255, 255, 0.7);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
+    // Play/Pause Button
+    playPauseBtn.addEventListener("click", function () {
+        if (video.paused) {
+            video.play();
+            this.innerHTML = "⏸"; // Pause Icon
+        } else {
+            video.pause();
+            this.innerHTML = "▶️"; // Play Icon
+        }
+    });
 
-.control-btn:hover {
-    background: rgba(0, 255, 255, 1);
-}
+    // Mute Button
+    muteBtn.addEventListener("click", function () {
+        video.muted = !video.muted;
+        this.innerHTML = video.muted ? "🔇" : "🔊"; // Mute/Unmute Icon
+    });
 
-/* Seek & Volume Sliders */
-.sliders-container {
-    position: absolute;
-    bottom: 5px;
-    width: 100%;
-    padding: 0 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
+    // Fullscreen Button
+    fullscreenBtn.addEventListener("click", function () {
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+        } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+        }
+    });
 
-.seek-bar {
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(to right, cyan, blue);
-    border-radius: 5px;
-    cursor: pointer;
-}
+    // Seek Bar
+    video.addEventListener("timeupdate", function () {
+        let progress = (video.currentTime / video.duration) * 100;
+        seekBar.value = progress;
+    });
 
-.volume-bar {
-    width: 60%;
-    height: 3px;
-    background: linear-gradient(to right, cyan, blue);
-    border-radius: 3px;
-    cursor: pointer;
-}
+    seekBar.addEventListener("input", function () {
+        let seekTime = (this.value / 100) * video.duration;
+        video.currentTime = seekTime;
+    });
+
+    // Volume Slider
+    volumeSlider.addEventListener("input", function () {
+        video.volume = this.value;
+    });
+
+    // Video Tracking Points (25%, 50%, 75%, 100%)
+    const trackPoints = [0.25, 0.5, 0.75, 1];
+    let trackTriggered = [false, false, false, false];
+
+    video.addEventListener("timeupdate", function () {
+        let progress = video.currentTime / video.duration;
+        trackPoints.forEach((point, index) => {
+            if (!trackTriggered[index] && progress >= point) {
+                console.log(`✅ ${point * 100}% watched!`);
+                trackTriggered[index] = true;
+            }
+        });
+    });
+});
