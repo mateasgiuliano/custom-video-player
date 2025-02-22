@@ -3,32 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Clean Overlay Video Player</title>
+  <title>Luxury Minimal Video Player</title>
 
   <!-- HLS.js for Cloudflare Stream -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-  <!-- Custom Styles -->
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div class="video-container">
-    <video id="customPlayer" class="video-frame"></video>
+<div class="video-container">
+  <!-- Video -->
+  <video id="customPlayer" class="video-frame"></video>
 
-    <!-- Overlay Controls -->
-    <div class="controls-overlay" id="controls">
-      <button id="playPauseBtn" class="control-btn">▶</button>
-      <button id="muteBtn" class="control-btn">🔊</button>
-      <button id="fullscreenBtn" class="control-btn">⛶</button>
+  <!-- Bottom Overlay Bar -->
+  <div class="controls-bar" id="controlsBar">
+
+    <!-- Left: Volume -->
+    <div class="volume-section">
+      <div id="volumeIcon" class="icon-volume"></div>
+      <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.05">
     </div>
 
-    <!-- Seek & Volume -->
+    <!-- Center: Progress Bar -->
     <input type="range" id="seekBar" class="seek-bar" min="0" max="100" step="1">
-    <input type="range" id="volumeSlider" class="volume-bar" min="0" max="1" step="0.05">
-  </div>
 
-  <!-- Player Logic -->
-  <script defer src="player.js"></script>
+    <!-- Right: Settings & Fullscreen -->
+    <div class="right-section">
+      <div class="icon-settings" id="settingsIcon"></div>
+
+      <!-- Settings Menu -->
+      <div class="settings-menu" id="settingsMenu">
+        <label>Playback Speed</label>
+        <select id="playbackSelect">
+          <option value="0.5">0.5x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+        <label>Quality (placeholder)</label>
+        <select id="qualitySelect">
+          <option value="auto">Auto</option>
+          <option value="480p">480p</option>
+          <option value="720p">720p</option>
+          <option value="1080p">1080p</option>
+        </select>
+      </div>
+
+      <div id="fullscreenIcon" class="icon-fullscreen"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Player Logic -->
+<script src="player.js"></script>
 </body>
 </html>
