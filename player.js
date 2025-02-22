@@ -13,75 +13,74 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    // ✅ Use your actual Cloudflare Stream Video ID
+    const videoId = "48fd8e8285166ea0935772228fbe428a"; 
+    const videoUrl = `https://customer-pcv8v9br19tspxo3.cloudflarestream.com/${videoId}/manifest/video.m3u8`;
+
     // Load Cloudflare Stream Video
     if (Hls.isSupported()) {
         var hls = new Hls();
-        hls.loadSource("https://customer-pcv8v9br19tspxo3.cloudflarestream.com/your-video-id/manifest/video.m3u8");
+        hls.loadSource(videoUrl);
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED, function () {
             console.log("✅ Video source loaded!");
         });
     } else {
-        video.src = "https://customer-pcv8v9br19tspxo3.cloudflarestream.com/your-video-id/manifest/video.m3u8";
+        video.src = videoUrl;
     }
 
-    // Play/Pause Button
+    // 🎯 **Play/Pause Button**
     playPauseBtn.addEventListener("click", function () {
         if (video.paused) {
             video.play();
-            this.innerHTML = "⏸"; // Pause Icon
+            this.innerHTML = "⏸"; // Update icon
         } else {
             video.pause();
-            this.innerHTML = "▶️"; // Play Icon
+            this.innerHTML = "▶️";
         }
     });
 
-    // Mute Button
+    // 🔊 **Mute/Unmute Button**
     muteBtn.addEventListener("click", function () {
         video.muted = !video.muted;
-        this.innerHTML = video.muted ? "🔇" : "🔊"; // Mute/Unmute Icon
+        this.innerHTML = video.muted ? "🔇" : "🔊"; // Toggle mute icon
     });
 
-    // Fullscreen Button
+    // 📺 **Fullscreen Toggle**
     fullscreenBtn.addEventListener("click", function () {
-        if (video.requestFullscreen) {
+        if (!document.fullscreenElement) {
             video.requestFullscreen();
-        } else if (video.mozRequestFullScreen) {
-            video.mozRequestFullScreen();
-        } else if (video.webkitRequestFullscreen) {
-            video.webkitRequestFullscreen();
-        } else if (video.msRequestFullscreen) {
-            video.msRequestFullscreen();
+        } else {
+            document.exitFullscreen();
         }
     });
 
-    // Seek Bar
-    video.addEventListener("timeupdate", function () {
-        let progress = (video.currentTime / video.duration) * 100;
-        seekBar.value = progress;
-    });
-
+    // 🎥 **Seek Bar Update**
     seekBar.addEventListener("input", function () {
-        let seekTime = (this.value / 100) * video.duration;
+        const seekTime = (video.duration * seekBar.value) / 100;
         video.currentTime = seekTime;
     });
 
-    // Volume Slider
+    // 🔉 **Volume Control**
     volumeSlider.addEventListener("input", function () {
-        video.volume = this.value;
+        video.volume = volumeSlider.value;
     });
 
-    // Video Tracking Points (25%, 50%, 75%, 100%)
-    const trackPoints = [0.25, 0.5, 0.75, 1];
-    let trackTriggered = [false, false, false, false];
+    // ✅ **Tracking for Video Progress**
+    let trackingPoints = [25, 50, 75, 95, 100]; // Track at these percentages
+    let tracked = {};
 
     video.addEventListener("timeupdate", function () {
-        let progress = video.currentTime / video.duration;
-        trackPoints.forEach((point, index) => {
-            if (!trackTriggered[index] && progress >= point) {
-                console.log(`✅ ${point * 100}% watched!`);
-                trackTriggered[index] = true;
+        let percent = (video.currentTime / video.duration) * 100;
+
+        trackingPoints.forEach(point => {
+            if (percent >= point && !tracked[point]) {
+                console.log(`📊 ${point}% watched!`);
+                tracked[point] = true; // Ensure event fires only once
             }
         });
+
+        // 🎯 **Update Seek Bar as Video Plays**
+        seekBar.value = (video.currentTime / video.duration) * 100;
     });
 });
