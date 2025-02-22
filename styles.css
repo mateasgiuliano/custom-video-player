@@ -1,111 +1,119 @@
-:root {
-    --video-bg: rgba(0, 0, 0, 0.8);
-    --control-bg: rgba(255, 255, 255, 0.2);
-    --control-hover-bg: rgba(255, 255, 255, 0.4);
-    --progress-bar: #3498db;
-    --progress-bg: rgba(255, 255, 255, 0.3);
-    --icon-color: rgba(255, 255, 255, 0.8);
-    --icon-hover-color: rgba(255, 255, 255, 1);
-}
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("🚀 Minimal Player JS loaded!");
 
-/* Video Container */
-.video-container {
-    position: relative;
-    width: 100%;
-    max-width: 900px;
-    margin: auto;
-    border-radius: 10px;
-    overflow: hidden;
-    background: var(--video-bg);
-}
+    const video = document.getElementById("customPlayer");
+    const volumeIcon = document.getElementById("volumeIcon");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const seekBar = document.getElementById("seekBar");
+    const settingsIcon = document.getElementById("settingsIcon");
+    const settingsMenu = document.getElementById("settingsMenu");
+    const fullscreenIcon = document.getElementById("fullscreenIcon");
+    const playbackSelect = document.getElementById("playbackSelect");
 
-/* Video */
-video {
-    width: 100%;
-    display: block;
-}
+    // ✅ Correct Video ID from Cloudflare Stream
+    const videoId = "48dfe82856166ea0935772228fbe428a"; 
+    const videoUrl = `https://customer-pcv8v9br19tspxo3.cloudflarestream.com/${videoId}/manifest/video.m3u8`;
 
-/* Controls */
-.video-controls {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--control-bg);
-    padding: 10px;
-    border-radius: 10px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
+    // ✅ HLS.js Video Loading (STAYS AS IT WORKED BEFORE)
+    if (Hls.isSupported()) {
+        const hls = new Hls({ debug: false });
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            console.log("✅ Video source loaded!");
+        });
+    } else {
+        video.src = videoUrl;
+    }
 
-.video-container:hover .video-controls {
-    opacity: 1;
-}
+    // ✅ Click video to Play/Pause (STAYS AS IT WORKED BEFORE)
+    video.addEventListener("click", () => {
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    });
 
-/* Volume & Seek Bar */
-.volume-container {
-    display: flex;
-    align-items: center;
-}
-#volumeIcon {
-    width: 24px;
-    cursor: pointer;
-    filter: brightness(1);
-    transition: filter 0.3s;
-}
-#volumeIcon:hover {
-    filter: brightness(1.5);
-}
-#volumeSlider {
-    width: 80px;
-    height: 4px;
-    background: var(--progress-bg);
-    cursor: pointer;
-}
+    // ✅ Volume slider logic (STAYS AS IT WORKED BEFORE)
+    volumeSlider.addEventListener("input", () => {
+        video.volume = volumeSlider.value;
+    });
 
-/* Seek Bar */
-#seekBar {
-    flex: 1;
-    height: 4px;
-    background: var(--progress-bg);
-    cursor: pointer;
-}
+    // ✅ Seek bar tracking & dragging (STAYS AS IT WORKED BEFORE)
+    video.addEventListener("timeupdate", () => {
+        if (!video.duration) return;
+        const progress = (video.currentTime / video.duration) * 100;
+        seekBar.value = progress;
+    });
 
-/* Icons */
-#settingsIcon, #fullscreenIcon {
-    width: 24px;
-    cursor: pointer;
-    filter: brightness(1);
-    transition: filter 0.3s;
-}
-#settingsIcon:hover, #fullscreenIcon:hover {
-    filter: brightness(1.5);
-}
+    seekBar.addEventListener("input", () => {
+        const time = (seekBar.value / 100) * video.duration;
+        video.currentTime = time;
+    });
 
-/* Settings Menu */
-.settings-menu {
-    position: absolute;
-    bottom: 50px;
-    right: 10px;
-    background: var(--video-bg);
-    padding: 10px;
-    display: none;
-    flex-direction: column;
-    border-radius: 5px;
-}
-.settings-menu label {
-    color: white;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-.settings-menu select {
-    background: var(--control-bg);
-    color: white;
-    border: none;
-    padding: 5px;
-    border-radius: 5px;
-}
+    // ✅ Settings icon -> toggle settings menu (STAYS AS IT WORKED BEFORE)
+    settingsIcon.addEventListener("click", () => {
+        settingsMenu.style.display = settingsMenu.style.display === "flex" ? "none" : "flex";
+    });
+
+    // ✅ Playback speed change (STAYS AS IT WORKED BEFORE)
+    if (playbackSelect) {
+        playbackSelect.addEventListener("change", () => {
+            video.playbackRate = parseFloat(playbackSelect.value);
+        });
+    }
+
+    // ✅ Fullscreen toggle (STAYS AS IT WORKED BEFORE)
+    fullscreenIcon.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            video.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+    // ✅ Tracking progress at key points (STAYS AS IT WORKED BEFORE)
+    const trackPoints = [25, 50, 75, 95, 100];
+    const tracked = {};
+    video.addEventListener("timeupdate", () => {
+        if (!video.duration) return;
+        const percent = (video.currentTime / video.duration) * 100;
+
+        trackPoints.forEach(point => {
+            if (percent >= point && !tracked[point]) {
+                console.log(`✅ User watched ${point}% of the video.`);
+                tracked[point] = true;
+            }
+        });
+    });
+
+    // ✅ Fix Volume Hover Responsiveness
+    volumeIcon.addEventListener("mouseenter", () => {
+        volumeSlider.style.opacity = "1"; 
+        volumeSlider.style.pointerEvents = "all";
+    });
+
+    volumeIcon.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+            if (!volumeSlider.matches(":hover")) {
+                volumeSlider.style.opacity = "0"; 
+                volumeSlider.style.pointerEvents = "none";
+            }
+        }, 200); // Slight delay to allow user interaction
+    });
+
+    volumeSlider.addEventListener("mouseleave", () => {
+        volumeSlider.style.opacity = "0"; 
+        volumeSlider.style.pointerEvents = "none";
+    });
+
+    // ✅ THEME CUSTOMIZATION (New but Safe)
+    function updateTheme(primaryColor, progressColor, iconOpacity) {
+        document.documentElement.style.setProperty("--progress-bar", progressColor);
+        document.documentElement.style.setProperty("--icon-opacity", iconOpacity);
+    }
+
+    // Example Usage - Can Be Controlled via Dashboard Later
+    updateTheme("#ffffff", "#3498db", "0.6");
+});
