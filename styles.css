@@ -1,4 +1,4 @@
-/* Minimal, Wistia/Eboov-like overlay player with ~58% opacity icons */
+/* Minimal, Wistia/Eboov-like overlay with volume icon thumb */
 
 /* Basic reset */
 * {
@@ -52,10 +52,11 @@ body {
 
 /* Left: Volume icon & slider */
 .left-controls {
-  position: relative; /* so volume slider can be absolute */
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 5px; /* larger area to make hover easier */
 }
 
 /* Right: Settings & Fullscreen */
@@ -97,10 +98,10 @@ body {
   background-image: url('data:image/svg+xml,<svg fill=\"white\" ... ></svg>');
 }
 
-/* Volume Slider: absolutely positioned so it doesn't push the bar */
+/* Volume Slider (hidden by default, expand on hover of .left-controls) */
 .volume-slider {
   position: absolute;
-  left: 30px; /* a bit to the right of the icon */
+  left: 35px; /* near the icon */
   bottom: 50%;
   transform: translateY(50%);
   width: 0px;
@@ -112,16 +113,30 @@ body {
   transition: width 0.2s;
 }
 
-.volume-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 10px;
-  height: 10px;
-  background: #fff;
-  border-radius: 50%;
-  cursor: pointer;
+.volume-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
 }
 
-/* Expand volume slider on hover */
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  /* Use a volume icon as the thumb */
+  background: url('data:image/svg+xml,<svg fill=\"white\" viewBox=\"0 0 24 24\" ... ></svg>') no-repeat center;
+  background-size: 70% 70%;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  opacity: 1;
+}
+
+/* Expand slider on hover */
 .left-controls:hover .volume-slider {
   width: 80px;
 }
@@ -134,6 +149,12 @@ body {
   border-radius: 2px;
   cursor: pointer;
   outline: none;
+}
+
+.seek-bar::-webkit-slider-runnable-track {
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
 }
 
 .seek-bar::-webkit-slider-thumb {
