@@ -9,23 +9,23 @@
 <body>
 
 <div class="video-container">
-    <video id="video" src="your-video.mp4" playsinline></video>
+    <video id="customPlayer" playsinline></video>
     
     <!-- Controls -->
     <div class="video-controls">
         <div class="volume-container">
-            <img src="volume-icon.svg" class="volume-icon">
-            <input type="range" class="volume-slider" min="0" max="1" step="0.1">
+            <img src="volume-icon.svg" id="volumeIcon" class="volume-icon">
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.1">
         </div>
         <div class="progress-bar">
             <div class="progress-bar-fill"></div>
             <div class="progress-bar-handle"></div>
         </div>
         <div class="settings-container">
-            <img src="settings-icon.svg" class="settings-icon">
-            <div class="settings-menu">
+            <img src="settings-icon.svg" id="settingsIcon" class="settings-icon">
+            <div class="settings-menu" id="settingsMenu">
                 <label>Playback Speed</label>
-                <select id="playbackSpeed">
+                <select id="playbackSelect">
                     <option value="0.5">0.5x</option>
                     <option value="1" selected>1x</option>
                     <option value="1.5">1.5x</option>
@@ -39,10 +39,10 @@
                 </select>
             </div>
         </div>
-        <img src="fullscreen-icon.svg" class="fullscreen-icon">
+        <img src="fullscreen-icon.svg" id="fullscreenIcon" class="fullscreen-icon">
     </div>
 </div>
 
-<script src="script.js"></script>
+<script src="player.js"></script>
 </body>
 </html>
