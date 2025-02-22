@@ -5,30 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Futuristic Video Player</title>
 
-    <!-- ✅ CSP Fix: Allow required sources -->
+    <!-- ✅ Content Security Policy Fix -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://customer-pcv8v9br19tspxo3.cloudflarestream.com;
-        script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval';
+        script-src 'self' https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com;
         media-src *;">
 
-    <!-- ✅ Import HLS.js -->
+    <!-- ✅ Import HLS.js for Cloudflare Stream -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-    <!-- ✅ Import Futuristic Font -->
+    <!-- ✅ Futuristic Font -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- ✅ Custom Styles -->
+    <!-- ✅ Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="video-container">
-        <video id="customPlayer" controls></video>
+        <video id="customPlayer"></video>
         <div id="controls">
-            <button id="playPauseBtn">▶ Play</button>
-            <button id="muteBtn">🔇 Mute</button>
-            <button id="fullscreenBtn">⛶ Fullscreen</button>
+            <button id="playPauseBtn">▶</button>
+            <button id="muteBtn">🔇</button>
+            <button id="fullscreenBtn">⛶</button>
             <input type="range" id="seekBar" min="0" max="100" step="1">
             <input type="range" id="volumeSlider" min="0" max="1" step="0.1">
         </div>
