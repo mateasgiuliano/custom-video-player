@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futuristic Video Player</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> <!-- HLS.js for Cloudflare Stream -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clean Overlay Video Player</title>
+
+  <!-- HLS.js for Cloudflare Stream -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<div class="video-container">
-    <video id="customPlayer" class="video-frame" controls></video>
+  <div class="video-container">
+    <video id="customPlayer" class="video-frame"></video>
 
-    <!-- Controls Overlay -->
-    <div class="controls-overlay">
-        <button id="playPauseBtn" class="control-btn play-pause">▶️</button>
-        <button id="muteBtn" class="control-btn mute">🔊</button>
-        <button id="fullscreenBtn" class="control-btn fullscreen">⛶</button>
+    <!-- Overlay Controls -->
+    <div class="controls-overlay" id="controls">
+      <button id="playPauseBtn" class="control-btn">▶</button>
+      <button id="muteBtn" class="control-btn">🔊</button>
+      <button id="fullscreenBtn" class="control-btn">⛶</button>
     </div>
 
-    <!-- Seek & Volume Sliders -->
-    <div class="sliders-container">
-        <input type="range" id="seekBar" class="seek-bar" min="0" max="100" step="1">
-        <input type="range" id="volumeSlider" class="volume-bar" min="0" max="1" step="0.1">
-    </div>
-</div>
+    <!-- Seek & Volume -->
+    <input type="range" id="seekBar" class="seek-bar" min="0" max="100" step="1">
+    <input type="range" id="volumeSlider" class="volume-bar" min="0" max="1" step="0.05">
+  </div>
 
-<script src="player.js"></script> <!-- Custom Video Player JavaScript -->
+  <!-- Player Logic -->
+  <script defer src="player.js"></script>
 </body>
 </html>
