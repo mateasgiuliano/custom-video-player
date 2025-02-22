@@ -1,121 +1,28 @@
-/* Incredible Futuristic Video Player UI */
+/* 
+  Luxury Minimal Video Player 
+  Overlay style with 58% transparency on icons 
+*/
 
-/* Global Reset & Body Styles */
+/* Basic reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
+
 body {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-family: 'Roboto', sans-serif;
 }
 
-/* Video Container */
+/* Container for video & controls */
 .video-container {
   position: relative;
   width: 80%;
   max-width: 900px;
-  border-radius: 15px;
+  border-radius: 10px;
   overflow: hidden;
-  background-color: #000;
-  box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
-}
-
-/* Video Element */
-video {
-  width: 100%;
-  display: block;
-  border-radius: 15px;
-}
-
-/* Controls Overlay (Floating on Video) */
-.controls-overlay {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  border-radius: 50px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.video-container:hover .controls-overlay {
-  opacity: 1;
-}
-
-/* Control Buttons (Minimal, Glowing Icons) */
-.control-btn {
-  background: linear-gradient(145deg, #00ffff, #0055ff);
-  border: none;
-  border-radius: 50%;
-  padding: 12px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 255, 255, 0.5);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.control-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 255, 255, 0.7);
-}
-
-/* Sliders Container (For Seek & Volume) */
-.sliders-container {
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* Seek Bar */
-.seek-bar {
-  width: 100%;
-  appearance: none;
-  background: rgba(255, 255, 255, 0.3);
-  height: 4px;
-  border-radius: 2px;
-  cursor: pointer;
-  outline: none;
-}
-.seek-bar::-webkit-slider-thumb {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  background: #00ffff;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #fff;
-}
-
-/* Volume Bar (Separate & Minimal) */
-.volume-bar {
-  width: 100px;
-  appearance: none;
-  background: rgba(255, 255, 255, 0.3);
-  height: 4px;
-  border-radius: 2px;
-  cursor: pointer;
-  outline: none;
-}
-.volume-bar::-webkit-slider-thumb {
-  appearance: none;
-  width: 10px;
-  height: 10px;
-  background: #00ffff;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #fff;
-}
