@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Luxury Minimal Video Player</title>
+  <title>Minimal Overlay Player</title>
 
   <!-- HLS.js for Cloudflare Stream -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -14,14 +14,13 @@
 <body>
 
 <div class="video-container">
-  <!-- Video -->
+  <!-- The Video -->
   <video id="customPlayer" class="video-frame"></video>
 
-  <!-- Bottom Overlay Bar -->
-  <div class="controls-bar" id="controlsBar">
-
-    <!-- Left: Volume -->
-    <div class="volume-section">
+  <!-- Bottom Overlay Controls -->
+  <div class="controls-bar">
+    <!-- Left: Volume Icon & Slider -->
+    <div class="left-controls">
       <div id="volumeIcon" class="icon-volume"></div>
       <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.05">
     </div>
@@ -30,30 +29,28 @@
     <input type="range" id="seekBar" class="seek-bar" min="0" max="100" step="1">
 
     <!-- Right: Settings & Fullscreen -->
-    <div class="right-section">
-      <div class="icon-settings" id="settingsIcon"></div>
-
-      <!-- Settings Menu -->
-      <div class="settings-menu" id="settingsMenu">
-        <label>Playback Speed</label>
-        <select id="playbackSelect">
-          <option value="0.5">0.5x</option>
-          <option value="1" selected>1x</option>
-          <option value="1.25">1.25x</option>
-          <option value="1.5">1.5x</option>
-          <option value="2">2x</option>
-        </select>
-        <label>Quality (placeholder)</label>
-        <select id="qualitySelect">
-          <option value="auto">Auto</option>
-          <option value="480p">480p</option>
-          <option value="720p">720p</option>
-          <option value="1080p">1080p</option>
-        </select>
-      </div>
-
+    <div class="right-controls">
+      <div id="settingsIcon" class="icon-settings"></div>
       <div id="fullscreenIcon" class="icon-fullscreen"></div>
     </div>
+  </div>
+
+  <!-- Settings Menu (hidden by default) -->
+  <div class="settings-menu" id="settingsMenu">
+    <label>Playback Speed</label>
+    <select id="playbackSelect">
+      <option value="0.5">0.5x</option>
+      <option value="1" selected>1x</option>
+      <option value="1.5">1.5x</option>
+      <option value="2">2x</option>
+    </select>
+    <label>Quality (placeholder)</label>
+    <select id="qualitySelect">
+      <option value="auto" selected>Auto</option>
+      <option value="480p">480p</option>
+      <option value="720p">720p</option>
+      <option value="1080p">1080p</option>
+    </select>
   </div>
 </div>
 
